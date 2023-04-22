@@ -13,6 +13,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Copy } from "lucide-react";
 import toast from "react-hot-toast";
+import { Slider } from "./ui/slider";
+import { cn } from "~/lib/utils";
 
 export default function PasswordGenerator() {
   const [password, setPassword] = useState("");
@@ -25,6 +27,8 @@ export default function PasswordGenerator() {
   const [passwordLength, setPasswordLength] = useState(8);
 
   const generatePassword = () => {
+    if (passwordLength > 32) setPasswordLength(32);
+
     const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
@@ -103,17 +107,17 @@ export default function PasswordGenerator() {
               />
               <Label htmlFor="uppercase">Uppercase</Label>
             </div>
-            <Input
-              type="number"
-              min={8}
-              max={32}
-              placeholder="length"
-              value={passwordLength}
-              onChange={(event) =>
-                setPasswordLength(Number(event.target.value))
-              }
-              onKeyDown={(e) => e.key === "Enter" && generatePassword()}
-            />
+            <div className="flex flex-col gap-4 mt-2">
+              <p className="text-sm text-secondary-foreground">Length : {passwordLength}</p>
+              <Slider
+                defaultValue={[passwordLength]}
+                onValueChange={e => setPasswordLength(e[0])}
+                max={32}
+                step={1}
+                min={8}
+                className={cn("w-full")}
+              />
+            </div>
           </div>
           <Button
             onClick={generatePassword}
