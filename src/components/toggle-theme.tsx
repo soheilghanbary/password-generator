@@ -13,7 +13,7 @@ export function ToggleTheme() {
     if (theme) {
       setInitTheme(theme);
     } else {
-      setInitTheme(systemTheme);
+      setInitTheme(systemTheme?.toString() ?? '');
     }
   }, [theme, systemTheme]);
 
