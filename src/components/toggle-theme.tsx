@@ -6,14 +6,16 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 export function ToggleTheme() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme , systemTheme } = useTheme();
   const [initTheme, setInitTheme] = useState("");
 
   useEffect(() => {
     if (theme) {
       setInitTheme(theme);
+    } else {
+      setInitTheme(systemTheme);
     }
-  }, [theme]);
+  }, [theme, systemTheme]);
 
   if (!initTheme.length) return <Skeleton className="w-44 h-8" />
 
